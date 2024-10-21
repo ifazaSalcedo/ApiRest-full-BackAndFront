@@ -1,0 +1,57 @@
+<p-toast />
+<p-confirmDialog />
+  <div class="flex flex-column">
+    <div class="field">
+      <label for="nombre" class="font-semibold w-6rem">Nombre</label>
+      <input pInputText id="nombre"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        autocomplete="off" [(ngModel)]="cliente.nombre" />
+    </div>
+    <div class="field">
+      <label for="nrodoc" class="font-semibold w-6rem">Nro. Documento/RUC</label>
+      <input pInputText id="nrodoc"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        autocomplete="off" [(ngModel)]="cliente.documentoNro" />
+    </div>
+    <div class="field">
+      <label for="ciudad" class="font-semibold w-6rem">Ciudad</label>
+      <select id="ciudad"
+        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
+        name="ciudad" style="appearance: auto" [(ngModel)]="cliente.ciudad" [compareWith]="compareCity">
+        <option *ngFor="let item of ciudades" [ngValue]="item">{{item.descripcion}}</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="direc" class="font-semibold w-6rem">Dirección</label>
+      <input pInputText id="direc"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        autocomplete="off" [(ngModel)]="cliente.direccion" />
+    </div>
+    <div class="field">
+      <label for="telef" class="font-semibold w-6rem">Teléfono</label>
+      <input pInputText id="telef"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        autocomplete="off" [(ngModel)]="cliente.telefono" />
+    </div>
+    <div class="field">
+      <label for="email" class="font-semibold w-6rem">Email</label>
+      <input pInputText id="email"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        autocomplete="off" [(ngModel)]="cliente.email" />
+    </div>
+  </div>
+
+   <div class="grid">
+      <div class="col">
+        @if (!isDelete) {
+        <button type="button" label="Grabar" pButton pRipple style="margin-right: 5px; width: 40%;"
+          severity="primary" (click)="saveCliente($event)"></button>
+        }
+        @if (isDelete) {
+        <button type="button" label="Eliminar" pButton pRipple style="margin-right: 5px; width: 40%;"
+          severity="danger" (click)="deleteCliente(cliente, $event)"></button>
+        }
+        <button type="button" label="Cancelar" pButton style="width: 40%;" pRipple severity="secondary"
+        (click)="closeDialogoImediate(null)"></button>
+      </div>
+    </div>

@@ -1,0 +1,30 @@
+<div class="flex flex-column">
+  <div class="flex-1 flex-column justify-content-start">
+    <p-iconField iconPosition="left">
+      <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      <input type="text" [autofocus]="true" pInputText placeholder="Nombre/Razón" [(ngModel)]="textoFiltro"
+        (keydown.enter)="filtrarCliente()" class="w-full mb-2"/>
+    </p-iconField>
+  </div>
+
+  <div class="flex flex-column justify-content-start">
+    <p-table [value]="clientes" styleClass="p-datatable-striped" responsiveLayout="scroll"  [tableStyle]="{'min-height':'400px'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Documento/RUC</th>
+          <th>Razón Social/Nombre</th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cliente>
+        <tr>
+          <td>{{cliente.documentoNro}}</td>
+          <td>{{cliente.nombre}}</td>
+          <td>
+            <p-button icon="pi pi-check-square" [rounded]="true" [text]="true" [raised]="true" severity="secondary" (onClick)="selectCliente(cliente)" />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

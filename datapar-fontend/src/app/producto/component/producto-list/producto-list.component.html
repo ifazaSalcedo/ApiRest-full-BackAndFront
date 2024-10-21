@@ -1,0 +1,56 @@
+<p-toast />
+<p-card header="LISTA DE PRODUCTOS" p-card-content p-flex-1 p-overflow-auto>
+  <div>
+    <button type="button" label="Agregar producto" pButton pRipple icon="pi pi-plus" style="margin-bottom: 20px;"
+      (click)="addProducto()"></button>
+  </div>
+  <div class="p-m-2" style="max-height: calc(100vh - 280px); overflow-y: auto;">
+    <p-table [value]="productos" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Descripción</th>
+          <th>Precio Venta</th>
+          <th>Cant. Stock</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-producto let-columns="columns">
+        <tr>
+          <td>
+            <button type="button" pButton pRipple icon="pi pi-pencil" (click)="editProducto(producto)"></button>
+          </td>
+          <td>
+            <button type="button" pButton pRipple icon="pi pi-trash" severity="danger"
+              (click)="deleteProducto(producto)"></button>
+          </td>
+          <td>
+            <span class="p-column-title">Id</span>{{producto.codigo}}
+          </td>
+          <td>
+            <span class="p-column-title">Nombre</span>{{producto.nombre}}
+          </td>
+          <td>
+            <span class="p-column-title">Nro. Doc.</span>{{producto.descripcion}}
+          </td>
+          <td>
+            <span class="p-column-title">Nro. Doc.</span>{{producto.precioVenta}}
+          </td>
+          <td>
+            <span class="p-column-title">Nro. Doc.</span>{{producto.stockActual}}
+          </td>
+        </tr>
+      </ng-template>
+
+      <!--<ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+      </ng-template>-->
+    </p-table>
+    <p-paginator  [rows]="10" [totalRecords]="totalItems"  (onPageChange)="cambiarPagina($event)"></p-paginator>
+  </div>
+</p-card>

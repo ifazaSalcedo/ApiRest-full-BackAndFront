@@ -1,0 +1,42 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="flex flex-column">
+<div class="flex flex-column m-2">
+    <label for="codigo" class="font-semibold w-6rem m-2">Código</label>
+    <input pInputText id="codigo" [disabled]="!isNew" autocomplete="off" [(ngModel)]="producto.codigo" />
+</div>
+
+  <div class="flex flex-column m-2">
+    <label for="nomproduc" class="font-semibold w-6rem m-2">Nombre</label>
+    <input pInputText id="nomproduc" autocomplete="off" [(ngModel)]="producto.nombre" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="descrip" class="font-semibold w-6rem m-2">Descripción</label>
+    <input pInputText id="descrip" autocomplete="off" [(ngModel)]="producto.descripcion" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="precioventa" class="font-semibold w-6rem m-2">Precio</label>
+    <p-inputNumber id="precioventa" autocomplete="off" [(ngModel)]="producto.precioVenta" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="stock" class="font-semibold w-6rem m-2">Stock</label>
+    <p-inputNumber   id="stock" autocomplete="off" [(ngModel)]="producto.stockActual" />
+  </div>
+
+
+<div class="grid">
+  <div class="col">
+    @if (!isDelete) {
+    <button type="button" label="Grabar" pButton pRipple style="margin-right: 5px; width: 40%;" severity="primary"
+      (click)="saveProducto($event)"></button>
+    }
+    @if (isDelete) {
+    <button type="button" label="Eliminar" pButton pRipple style="margin-right: 5px; width: 40%;" severity="danger"
+      (click)="deleteProducto(producto, $event)"></button>
+    }
+    <button type="button" label="Cancelar" pButton style="width: 40%;" pRipple severity="secondary"
+      (click)="closeDialogoImediate()"></button>
+  </div>
+</div>
+</div>

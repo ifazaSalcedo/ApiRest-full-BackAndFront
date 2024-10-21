@@ -1,0 +1,30 @@
+<p-toast />
+<p-confirmDialog />
+<div class="flex flex-column">
+  <div class="flex">
+    <!--Boton busqueda de cliente-->
+    <p-button icon="pi pi-search" tabindex="-1" [rounded]="true" [text]="true" severity="success" (onClick)="openDialogoBusquedaProducto()"/>
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="codigo" class="font-semibold w-6rem m-2">Código</label>
+    <input #txtCodigoArt pInputText id="codigo" autocomplete="off" [(ngModel)]="detallePedido.producto.codigo"
+      (blur)="buscarProducto()" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="nomproduc" class="font-semibold w-6rem m-2">Nombre</label>
+    <input pInputText id="nomproduc" [disabled]="true" autocomplete="off"
+      [(ngModel)]="detallePedido.producto.descripcion" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="precioventa" class="font-semibold w-6rem m-2">Precio</label>
+    <p-inputNumber id="precioventa" [disabled]="true" autocomplete="off" [(ngModel)]="detallePedido.precioUnitario" />
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="cantidad" class="font-semibold w-6rem m-2">Cantidad</label>
+    <p-inputNumber #txtCantidad id="cantidad" autocomplete="off" [(ngModel)]="detallePedido.cantidad" (onBlur)="calcularSubTotal()"/>
+  </div>
+  <div class="flex flex-column m-2">
+    <label for="subtotal" class="font-semibold w-6rem m-2">Sub-Total</label>
+    <p-inputNumber id="subtotal" [disabled]="true" autocomplete="off" [(ngModel)]="detallePedido.subtotal" />
+  </div>
+</div>

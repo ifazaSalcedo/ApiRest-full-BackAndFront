@@ -1,0 +1,121 @@
+<p-toast />
+
+<p-confirmPopup key="popup" />
+<p-confirmDialog key="dialog" />
+
+<div class="flex flex-column p-fluid" style="max-width: 100%;">
+  <div class="p-flex-1 p-overflow-auto p-fluid p-m-2 p-sm-3 p-md-4 p-lg-5">
+    <div class="card flex align-items-center justify-content-center">
+      <p-chip styleClass="pl-0 pr-3">
+        <span class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">
+          P
+        </span>
+        <span class="ml-2 font-medium">
+          {{pedidoNumero}}
+        </span>
+      </p-chip>
+      <p-chip styleClass="pl-0 pr-3 mb-1">
+        <span class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">
+          F
+        </span>
+        <span class="ml-2 font-medium">
+          {{pedidoFecha}}
+        </span>
+      </p-chip>
+    </div>
+    <p-fieldset legend="DATOS PEDIDOS - CLIENTE" [toggleable]="true">
+      <div class="formgrid grid">
+        <!-- Campo RUC -->
+         <div class="field col-12 sm:col-12 md:col-4 lg:col-3 m-2">
+          <label for="ruc" class="col-12 mb-2 md:mb-0">Nro. Documento/RUC</label>
+          <div class="flex">
+            <div class="flex-1">
+              <input pAutoFocus #txtRuc type="text" [autofocus]="true" pInputText class="w-full" [(ngModel)]="pedido.cliente.documentoNro"
+              (blur)="buscarCliente()" />
+            </div>
+            <div class="flex">
+              <!--Boton busqueda de cliente-->
+              <p-button icon="pi pi-search" tabindex="-1" [rounded]="true" [text]="true" severity="success" (onClick)="openDialogBusquedaCliente()"/>
+            </div>
+          </div>
+         </div>
+        <!-- Campo Nombre -->
+        <div class="field col-12 sm:col-12 md:col-6 lg:col-5 m-2">
+          <label for="nombre" class="col-12 mb-2 md:mb-0">Nombre/Razón Social</label>
+          <input type="text" [disabled]="true" pInputText class="w-full" [(ngModel)]="pedido.cliente.nombre" />
+        </div>
+        <!-- Campo Teléfono -->
+        <div class="field col-12 sm:col-12 md:col-4 lg:col-3 m-2">
+          <label for="telefono" class="col-12 mb-2 md:mb-0">Teléfono</label>
+          <input type="text" [disabled]="true" pInputText class="w-full" [(ngModel)]="pedido.cliente.telefono" />
+        </div>
+        <!-- Campo Dirección -->
+        <div class="field col-12 sm:col-12 md:col-6 lg:col-6 m-2">
+          <label for="direccion" class="col-12 mb-2 md:mb-0">Dirección</label>
+          <input type="text" [disabled]="true" pInputText class="w-full" [(ngModel)]="pedido.cliente.direccion" />
+        </div>
+        <!-- Campo Email -->
+        <div class="field col-12 sm:col-12 md:col-6 lg:col-5 m-2">
+          <label for="email" class="col-12 mb-2 md:mb-0">Email</label>
+          <input type="text" [disabled]="true" pInputText class="w-full" [(ngModel)]="pedido.cliente.email" />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <div class="p-m-2" style="max-height: calc(100vh - 280px); overflow-y: auto;">
+      <p-table [value]="pedido.detallePedidosDto" [tableStyle]="{'min-width': '50rem'}" class="m-1">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <p-button icon="pi pi-plus" label="Agregar Item" (click)="stateDetalleDialog(true)" />
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>
+            </th>
+            <th>Item</th>
+            <th>Codigo</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Uni.</th>
+            <th>Sub. Total</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-detalle let-columns="columns">
+          <tr>
+            <td> <button #btnAgregarItem type="button" pButton pRipple icon="pi pi-trash" severity="danger"
+                (click)="deleteItem(detalle, $event)"></button></td>
+            <td>{{detalle.item}}</td>
+            <td> {{detalle.producto.codigo}} </td>
+            <td>{{detalle.producto.descripcion}}</td>
+            <td>{{detalle.cantidad}}</td>
+            <td>{{detalle.precioUnitario}}</td>
+            <td>{{detalle.subtotal}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="flex flex-column m-2 col-12 sm:col-12 md:col-4 lg:col-3 m-2">
+        <label for="cantidad" class="font-semibold w-6rem m-2">Cantidad</label>
+        <p-inputNumber id="cantidad" [disabled]="true" autocomplete="off" [(ngModel)]="counterItem" />
+      </div>
+      <div class="flex flex-column m-2 col-12 sm:col-12 md:col-3 lg:col-3 m-2">
+        <label for="subtotal" class="font-semibold w-6rem m-2">Sub-Total</label>
+        <p-inputNumber id="subtotal" [disabled]="true" autocomplete="off" [(ngModel)]="tatalityPedido" />
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col-12 sm:col-12 md:col-4 lg:col-3 m-2">
+        <button type="button" class="w-full" label="Grabar" pButton pRipple severity="primary"
+          (click)="savePedido($event)"></button>
+      </div>
+      <div class="field col-12 sm:col-12 md:col-4 lg:col-3 m-2">
+        <button type="button" class="w-full" label="Cancelar" pButton pRipple severity="secondary"
+          (click)="reset()"></button>
+      </div>
+    </div>
+  </div>
+</div>

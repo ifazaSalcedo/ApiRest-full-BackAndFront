@@ -1,0 +1,57 @@
+<p-toast />
+
+<p-card header="LISTA DE CLIENTES">
+
+  <div>
+    <button type="button" label="Agregar cliente" pButton pRipple icon="pi pi-plus"
+    style="margin-bottom: 20px;" (click)="addCliente()"></button>
+  </div>
+
+  <p-table [value]="clientes"  [scrollable]="true" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Código</th>
+        <th>Nombre/Razón Social</th>
+        <th>RUC/Documento</th>
+        <th>Ciudad</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>email</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cliente let-columns="columns">
+      <tr>
+        <td>
+          <button type="button" pButton pRipple icon="pi pi-pencil" (click)="editCliente(cliente)"></button>
+        </td>
+        <td>
+          <button type="button" pButton pRipple icon="pi pi-trash" severity="danger" (click)="deleteCliente(cliente)"></button>
+        </td>
+        <td>
+          <span class="p-column-title">Id</span>{{cliente.codigo}}
+        </td>
+        <td>
+          <span class="p-column-title">Nombre</span>{{cliente.nombre}}
+        </td>
+        <td>
+          <span class="p-column-title">Nro. Doc.</span>{{cliente.documentoNro}}
+        </td>
+        <td>
+          <span class="p-column-title">Ciudad</span>{{cliente.ciudad.descripcion}}
+        </td>
+        <td>
+          <span class="p-column-title">Direccion</span>{{cliente.direccion}}
+        </td>
+        <td>
+          <span class="p-column-title">Teéfono</span>{{cliente.telefono}}
+        </td>
+        <td>
+          <span class="p-column-title">Email</span>{{cliente.email}}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-paginator  [rows]="size" [totalRecords]="totalItems"  (onPageChange)="cambiarPagina($event)"></p-paginator>
+</p-card>
